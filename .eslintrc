@@ -1,0 +1,53 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
+  "rules": {
+    "react/jsx-uses-react": 0,
+    "react/jsx-uses-vars": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/no-multi-comp": 0,
+    "react/prop-types": 0,
+    "react/wrap-multilines": 0,
+    // Disable until Flow supports let and const
+    "no-var": 0,
+    "vars-on-top": 0,
+    // Disable comma-dangle unless need to support it
+    "comma-dangle": 0,
+    "comma-spacing": 0,
+    "eqeqeq": 0,
+    "no-unused-vars": 0,
+    "indent": 0,
+    "jsx-quotes": 0,
+    "key-spacing": 0,
+    "no-shadow": 0,
+    "no-unused-expressions": 0,
+    "no-undef": 0,
+    "no-use-before-define": 0,
+    "no-multiple-empty-lines": 0,
+    "no-trailing-spaces":0,
+    "curly":0,
+    "no-else-return":0,
+    //"semi":[2,"always"],
+    "strict": 0,
+    "guard-for-in": 0,
+    "func-names": 0,
+    "padded-blocks": 0,
+    "quotes": 0,
+    //function must have name
+    "spaced-comment": 0,
+    "space-before-blocks": 0,
+    "space-before-function-paren": 0,
+    "space-infix-ops": 0,
+    "semi": 0,
+    //comment should be spaced
+    "no-nested-ternary": 0,
+    "valid-jsdoc": 0
+  },
+  "plugins": [
+    "react"
+  ]
+}
