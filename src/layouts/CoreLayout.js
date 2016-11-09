@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import LeftMenu from './LeftMenu';
 import '../../node_modules/antd/lib/index.css';
 import '../styles/core.scss';
-import {showMask} from '../redux/modules/delete/layout';
+import {showMask} from '../redux/modules/delete/layout'
 import {REDIRECT_HOST as login} from '../help/constants'
 import Header from './Header'
 @connect((state) => ({
@@ -22,23 +22,19 @@ export default class CoreLayout extends React.Component<void, void> {
     this.state = {
       mask: false, menus: [
         {
-          type: 'home', title: '用户指南',
+          type: 'setting', title: '数据设定与显示',
           children: [
-            {to: '/documentation/introduction', content: '产品文档'},
+            {to: '/info/alarm/alarmsetting', content: '设定报警阈值'},
+            {to: '/info/data/data', content: '实时参数显示'}
           ]
         },
         {
-          type: 'solution', title: '配置中心',
+          type: 'setting', title: '使用帮助',
           children: [
-            {to: '/cluster', content: 'cluster列表'},
+            {to: '/help/1', content: '1'},
+            {to: '/help/2', content: '2'}
           ]
         },
-        {
-          type: 'paper-clip', title: 'job中心',
-          children: [
-            {to: '/job', content: 'job列表'},
-          ]
-        }
       ]
     };
   }
@@ -84,7 +80,7 @@ export default class CoreLayout extends React.Component<void, void> {
             </div>
           </div>
           <div className="ant-layout-footer">
-            © 2016 Copyright. 平台技术中间件团队(@约旦, @青羽, @城管)
+            copyright
           </div>
         </div>
       </div>

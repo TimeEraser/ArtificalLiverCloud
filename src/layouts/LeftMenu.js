@@ -28,7 +28,7 @@ export default class LeftMenu extends React.Component {
       <div>
         <aside className="ant-layout-sider">
           <div className="ant-layout-logo"></div>
-          <Menu mode="inline" theme="dark"
+          <Menu mode="horizontal" theme= "light"
                 defaultSelectedKeys={[`${itemIndex}`]} defaultOpenKeys={[`sub${subIndex}`]}>
             {this.renderSubMenu(this.props.menus)}
           </Menu>
