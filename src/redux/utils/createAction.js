@@ -2,7 +2,7 @@ function identity(t) {
   return t;
 }
 
-export default function createAction(type, actionCreator, metaCreator) {
+export default function createAction_orig(type, actionCreator, metaCreator) {
   const finalActionCreator = typeof actionCreator === 'function'
     ? actionCreator
     : identity;
