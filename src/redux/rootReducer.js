@@ -9,7 +9,7 @@ import jobDetail from './modules/jobCenter/jobDetail';
 import monitor from './modules/delete/monitor';
 import syntax from './modules/delete/syntax';
 import userInfo from './modules/userInfo';
-
+import surgery from './modules/surgery/surgery';
 export default combineReducers({
   authority,
   setting,
@@ -20,6 +20,7 @@ export default combineReducers({
   monitor,
   syntax,
   router,
-  userInfo
+  userInfo,
+  surgery
 });
 
