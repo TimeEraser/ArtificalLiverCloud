@@ -4,18 +4,32 @@ import SurgeryTable from './SurgeryTable';
 import {connect} from 'react-redux';
 import {
   getSurgeries,
-  changeSurgeriesTimeRange,
-} from '../../redux/modules/surgery/surgery';
+  getPersons,
+  changeConditionsDoctor,
+  changeConditionsPatient,
+  changeConditionsTimeRange,
+} from '../../redux/modules/surgery/SurgeryData';
 @connect((state)=>({
-  surgeries:state.surgery.surgeries,
-  timeRange:state.surgery.timeRange,
-}), {getSurgeries,changeSurgeriesTimeRange})
+  surgeries:state.SurgeryData.surgery.surgeries,
+  timeRange:state.SurgeryData.conditions.timeRange,
+  doctor:state.SurgeryData.conditions.doctor,
+  patient:state.SurgeryData.conditions.patient,
+  doctors:state.SurgeryData.persons.doctors,
+  patients:state.SurgeryData.persons.patients,
+}), {getSurgeries,getPersons,changeConditionsDoctor,changeConditionsPatient,changeConditionsTimeRange})
 export default class Surgery extends React.Component {
   static propTypes = {
-    surgeries: PropTypes.object.isRequired,
+    surgeries:PropTypes.array.isRequired,
+    doctors:PropTypes.array.isRequired,
+    patients:PropTypes.array.isRequired,
     timeRange: PropTypes.string.isRequired,
+    doctor:PropTypes.string.isRequired,
+    patient:PropTypes.string.isRequired,
     getSurgeries: PropTypes.func.isRequired,
-    changeSurgeriesTimeRange: PropTypes.func.isRequired,
+    getPersons: PropTypes.func.isRequired,
+    changeConditionsDoctor: PropTypes.func.isRequired,
+    changeConditionsPatient: PropTypes.func.isRequired,
+    changeConditionsTimeRange: PropTypes.func.isRequired,
   };
   render() {
     return (

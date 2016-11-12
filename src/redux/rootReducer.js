@@ -9,18 +9,18 @@ import jobDetail from './modules/jobCenter/jobDetail';
 import monitor from './modules/delete/monitor';
 import syntax from './modules/delete/syntax';
 import userInfo from './modules/userInfo';
-import surgery from './modules/surgery/surgery';
+import SurgeryData from './modules/surgery/SurgeryData';
 export default combineReducers({
   authority,
   setting,
   configCenter,
   jobCenter,
   jobDetail,
+  SurgeryData,
   layout,
   monitor,
   syntax,
   router,
-  userInfo,
-  surgery
+  userInfo
 });
 

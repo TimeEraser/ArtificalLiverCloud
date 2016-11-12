@@ -1,5 +1,5 @@
 const pre = 'http://';
-const suf = 'access.vacuum.mogujie.org:8080';
+const suf = 'localhost:8080';
 //const suf = 'access.vacuum.mogujie.org:8080';
 //线上,线下,预发分别跳转至对应的首页。
 

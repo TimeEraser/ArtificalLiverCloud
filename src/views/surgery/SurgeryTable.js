@@ -4,24 +4,37 @@ import {Table,Icon,Tag,Popover,Button} from 'antd';
 import { formatDate } from '../../help/dateUtils'
 import {
   getSurgeries
-} from '../../redux/modules/surgery/surgery';
+} from '../../redux/modules/surgery/SurgeryData';
 @connect((state)=>({
-  surgeries: state.surgery.surgeries,
-  timeRange:state.surgery.timeRange
+  surgeries:state.SurgeryData.surgery.surgeries,
+  timeRange:state.SurgeryData.conditions.timeRange,
+  doctor:state.SurgeryData.conditions.doctor,
+  patient:state.SurgeryData.conditions.patient,
 }),{getSurgeries ,formatDate})
 export default class SurgeryTable extends React.Component {
   static propTypes = {
-    surgeries: PropTypes.array.isRequired
+    surgeries: PropTypes.array.isRequired,
+    timeRange: PropTypes.string.isRequired,
+    doctor:PropTypes.string.isRequired,
+    patient:PropTypes.string.isRequired,
+    getSurgeries: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
     super(props, context);
     const {query} = this.props.location;
-    this.handleSurgerySearch();
+    var param={
+      timeRange:this.props.timeRange,
+      doctor:this.props.doctor,
+      patient:this.props.patient,
+    };
+    this.handleSurgerySearch(param);
   }
   handleSurgerySearch(){
     var param={
       timeRange:this.props.timeRange,
+      doctor:this.props.doctor,
+      patient:this.props.patient,
     };
     this.props.getSurgeries(param);
   }
@@ -29,7 +42,7 @@ export default class SurgeryTable extends React.Component {
     const SURGERY_INIT =1;
     const SURGERY_EXECUTING =2;
     const SURGERY_COMPLETE =3;
-    const {surgeries} = this.props;
+    const {surgeries,timeRange, doctor, patient} = this.props;
     const transformSurgery = (obj)=> {
       _.merge(obj, {
         key: obj.id
@@ -40,9 +53,6 @@ export default class SurgeryTable extends React.Component {
       title: '手术号',
       dataIndex: 'surgeryNo',
       key: 'surgeryNo',
-      render(value,record){
-        return formatDate(value);
-      },
     },{
       title: '开始时间',
       dataIndex: 'startTime',
@@ -51,7 +61,9 @@ export default class SurgeryTable extends React.Component {
       render(value,record){
         var state=value;
         if (record.state == SURGERY_INIT) {
-          state=<Tag color="yellow">- -</Tag>
+          state = <Tag color="yellow">-    -</Tag>
+        } else {
+            state= formatDate(value);
         }
         return state;
       },
@@ -59,10 +71,13 @@ export default class SurgeryTable extends React.Component {
       title: '结束时间',
       dataIndex: 'endTime',
       key: 'endTime',
+      sorter: (a, b) => a.endTime - b.endTime,
       render(value,record){
         var state=value;
-        if (record.state == SURGERY_COMPLETE) {
-          state=<Tag color="yellow">- -</Tag>
+        if (record.state != SURGERY_COMPLETE) {
+          state=<Tag color="yellow">-    -</Tag>
+        } else {
+          state= formatDate(value);
         }
         return state;
       }
