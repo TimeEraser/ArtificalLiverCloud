@@ -2,6 +2,7 @@ import {get, post} from '../../../help/fetchHelp';
 import _ from 'lodash';
 import {combineReducers} from 'redux';
 import React from 'react';
+import {Modal} from 'antd';
 import {notification} from 'antd';
 import {getCurrentDate,getBeforeDate} from '../../../help/dateUtils';
 
@@ -52,6 +53,7 @@ export const getSurgeries = (param)=> {
         _.forEach(surgeries, (obj)=> {
           transformSurgeries(surgeries);
         });
+        openNotificationWithIcon("success",'查询手术成功','');
         dispatch(receiveSurgeries(surgeries));
     },
     onFailure:()=> {

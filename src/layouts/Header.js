@@ -22,7 +22,6 @@ export default class Header extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getUserInfo();
   }
 
   render() {

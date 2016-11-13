@@ -1,5 +1,6 @@
 import {CONSOLE_HOST as domain} from './constants';
-import {REDIRECT_HOST as login} from './constants'
+import {REDIRECT_HOST as login} from './constants';
+import {notification} from 'antd';
 export function formatQuery(param) {
   var result = '';
   var flag = false;
@@ -23,7 +24,12 @@ export function get(url, param) {
       } else if ((result.status) && (result.status.code === 4005)){
         throw new Error(result.status.msg);
       }
-      throw new Error(`请求失败,${result.message}`);
+      const args = {
+        message: "请求失败",
+        description: result.message,
+        duration: 2,
+      };
+      notification.error(args);
     });
 }
 
@@ -51,7 +57,12 @@ export function post(url, param, isJson) {
       } else if ((result.status) && (result.status.code === 4005)){
         throw new Error(result.status.msg);
       }
-      throw new Error(`请求失败,${result.message}`);
+      const args = {
+        message: "请求失败",
+        description: result.message,
+        duration: 2,
+      };
+      notification.error(args);
     });
 }
 
