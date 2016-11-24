@@ -1,178 +1,283 @@
 /**
  * Created by reky on 2016/11/9.
  */
-import React from 'react';
+
 import ReactEcharts from 'echarts-for-react';
 import {Slider} from 'antd';
+import {} from '../../../redux/modules/chart/chartData'
+import {} from '../../../redux/modules/alarm/alarmCenter'
+
+import React, {PropTypes} from 'react';
+import {connect, Provider} from 'react-redux';
 
 
+// const defaultOption = {
+//   animation: false,
+//   animationErasing: "elasticOut",
+//   //animationDuration: 10,
+//   title : {
+//     show: true,
+//     //text: this.props.title
+//   },
+//   legend : {
+//     show: true,
+//   },
+//   grid : {
+//     show: true,
+//   },
+//   xAxis : {
+//     //inverse: "true",
+//     data  : [],
+//   },
+//   yAxis : {
+//     type: "value",
+//   },
+//   //series : this.props.series,
+//   toolbox: {
+//     left: 'center',
+//     feature: {
+//       dataZoom: {
+//         yAxisIndex: 'none'
+//       },
+//       restore: {},
+//       saveAsImage: {}
+//     }
+//   },
+//   //visualMap: this.props.visualMap,
+// }
 
+const defaultOption = {
+  animation: false,
+  //animationErasing: "elasticOut",
+  //animationDuration: 10,
+  title : {
+    show: true,
+    top: 20,
+    //text: this.props.title
+  },
+  legend : {
+    show: true,
+    data: [],
+    top: 30,
+    right: 10,
+  },
+  grid : {
+    show: false,
+  },
+  xAxis : {
+    //inverse: "true",
+    data  : [],
+  },
+  yAxis : {
+    type: "value",
+    position: "right"
+  },
+  //series : this.props.series,
+  toolbox: {
+    // left: 'center',
+    feature: {
+      dataZoom: {
+        yAxisIndex: 'none'
+      },
+      saveAsImage: {}
+    },
+    left: "0%",
+    top: 0,
+  },
+  // visualMap: [{
+  //   seriesIndex: 1,
+  //   type: "piecewise",
+  //   show: false,
+  //   pieces: [
+  //     {gt: 67, color: "#ee0000"},
+  //     {lt: 67, gt:62, color: "#66ccff"},
+  //     {lt: 62, color: "#ee0000"},
+  //   ],
+  // },
+  //   {
+  //     seriesIndex: 0,
+  //     type: "piecewise",
+  //     show: false,
+  //     pieces: [
+  //       {gt: 37, color: "#ee0000"},
+  //       {lt: 37, gt:32, color: "#66ccff"},
+  //       {lt: 32, color: "#ee0000"},
+  //     ],
+  //   }
+  //   ],
+};
+
+@connect((state)=> ({
+  alarmData: state.alarmCenter.data.alarmData,
+  guardian: state.chartData.guardian.guardian,
+  pressure: state.chartData.pressure.pressure,
+  pumpSpeed: state.chartData.pumpSpeed.pumpSpeed,
+}))
 export default class Chart extends React.Component{
   /*propTypes = {
     yAxisName: React.PropTypes.string.isRequired,
 
   };*/
-
-  getInitialOption = function (){
-    return (
-      this.defaultOption
-    )
+  static propTypes= {
+    name: React.PropTypes.array.isRequired,
+    dataSource: React.PropTypes.object.isRequired,
+    title: React.PropTypes.string.isRequired,
+    isPump: React.PropTypes.bool.isRequired,
   };
-
   getOption = function (){
     return (
       this.option
     )
   };
 
-
-
-  defaultOption1 = {
-    tooltip : {
-      trigger: 'item'
-    },
-    legend: {
-      data: ['Growth', 'Budget 2011', 'Budget 2012'],
-      itemGap: 5
-    },
-    grid: {
-      top: '12%',
-      left: '1%',
-      right: '10%',
-      containLabel: true
-    },
-    xAxis: [
-      {
-        type : 'category',
-        //data : obama_budget_2012.names
-      }
-    ],
-    yAxis: [
-      {
-        type : 'value',
-        name : 'Budget (million USD)',
-      }
-    ],
-    dataZoom: [
-      {
-        type: 'slider',
-        show: true,
-        start: 94,
-        end: 100,
-        handleSize: 8
-      },
-      {
-        type: 'inside',
-        start: 94,
-        end: 100
-      },
-      {
-        type: 'slider',
-        show: true,
-        yAxisIndex: 0,
-        filterMode: 'empty',
-        width: 12,
-        height: '70%',
-        handleSize: 8,
-        showDataShadow: false,
-        left: '93%'
-      }
-    ],
-    series : [
-      {
-        name: 'Budget 2011',
-        type: 'bar',
-        //data: obama_budget_2012.budget2011List
-      },
-      {
-        name: 'Budget 2012',
-        type: 'bar',
-        //data: obama_budget_2012.budget2012List
-      }
-    ]
-  };
-
-  /* 需要作为标签引出的
-  标题 title.text string
-  X轴数据 xAxis.data array
-  分段颜色 visualMap
-  y轴数据 series.data
-  */
-  /*需要添加的功能
-  toolbox
-  dataZoom
-  */
-  defaultOption = {
-    dataZoom: [ {
-      id: 'dataZoomX',
-      type: 'slider',
-      xAxisIndex: [0],
-      filterMode: 'filter'
-    },
-      {
-        id: 'dataZoomY',
-        type: 'slider',
-        yAxisIndex: [0],
-        filterMode: 'empty'
-      }],
-    title : {
-      show: true,
-    },
-    legend : {
-      show: true,
-    },
-    grid : {
-      show: true,
-    },
-    xAxis : {
-      inverse: "true",
-      data  : [{
-        value: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18, 'y=x'],
-      }],
-    },
-    yAxis : {
-      type: "value",
-    },
-    series : {
-      type : 'line',
-      name : 'Pressure',
-      data : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-    },
-    toolbox: {
+  optionGenerate = function(name, dataSource, title, isPump=false) {//单一纵轴，多组数据显示，例如 收缩压-舒张压
+    var result = _.clone(defaultOption);
+    var dataSourceTemp = dataSource;
+    var i;
+    var sym;
+    var yTemp;
+    var mark = '';
+    var higher=0;
+    var lower=0;
+    const alarmDataSource = this.props.alarmData;
+    result.visualMap = [];
+    result.series = [];
+    result.title = {
+      text: title,
       left: 'center',
-      feature: {
-        dataZoom: {
-          yAxisIndex: 'none'
-        },
-        restore: {},
-        saveAsImage: {}
+      // top: -20,
+      subtext: '',
+    };
+    result.tooltip= {
+      trigger: 'axis',
+      // left: '10%',
+    };
+    result.legend.data = [];
+    //result.xAxis = dataSource.xAxis;
+    for (i = 0; i <= name.length - 1; i++) {
+      result.legend.data=result.legend.data.concat([name[i]]);
+      result.legend.right=10;
+      result.legend.top=10;
+      if (dataSourceTemp[name[i]] === undefined) {
+        result.series[i] = {
+          sampling: 'average',
+          //animation: true,
+          //animationDuration:2000,
+          type: "line",
+          name: "undefined"+i.toString(),
+          //data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        };
+      } else {
+        //result.title.text = result.title.text + name[i] + '-';
+        if (i==0){
+          sym = 'emptyCircle'
+        } else if (i==1) {
+          sym = 'emptyTriangle'
+        }
+        if (((isPump==true) && (name[i].substr(name[i].length-1)) != 'T')){
+          if (dataSourceTemp[name[i]][0]>=0){
+            mark = 'max';
+          } else {mark = 'min'}
+          yTemp = result.yAxis;
+          result.yAxis=[];
+          result.yAxis[0] = yTemp;
+          result.yAxis[1] = {
+            // name: '实时速率',
+            type: "value",
+            position: "left",
+            min: -100,
+            max: 100,
+            splitNumber: 1,
+          };
+          result.series[i] = {
+            markPoint: {
+              data: [
+                {type: mark, name: name[i] + '速率'},
+              ]
+            },
+            yAxisIndex: 1,
+            symbolSize: 28,
+            symbol: 'circle',
+            type: "line",
+            name: name[i],
+            data: dataSourceTemp[name[i]],
+            sampling: "average",
+          };
+        } else {
+          if ((name[i].substr(name[i].length-1)) == 'T'){
+            if (dataSourceTemp[name[i]][0]>=0) {
+              higher = dataSourceTemp[name[i]][dataSourceTemp[name[i]].length-1]
+            } else {
+              lower = dataSourceTemp[name[i]][dataSourceTemp[name[i]].length-1]
+            }
+          }
+          result.series[i] = {
+            yAxisIndex : 0,
+            symbolSize: 8,
+            symbol: sym,
+            smooth: false,
+            type: "line",
+            name: name[i],
+            data: dataSourceTemp[name[i]],
+            sampling: "average",
+          };
+        }
       }
-    },
-    visualMap: {
-      pieces: [{
-        gt: 0,
-        lte: 6,
-        color: '#ff6100'
-      },{
-        gt: 5,
-        lte: 12,
-        color: '#66ccff'
-      },{
-        gt: 12,
-        lte: 20,
-        color: '#ff6100'
-      }],
+      if (!(name[i].toString() in alarmDataSource)) {
+        result.visualMap =result.visualMap.concat([{
+          show: false,
+          seriesIndex: i,
+          type: "piecewise",
+          pieces: [
+            {gt: -9999999999, color: "#66ccff"},
+          ],
+        }]);
+      } else {
+        result.visualMap = result.visualMap.concat([{
+          show: false,
+          seriesIndex: i,
+          type: "piecewise",
+          pieces: [
+            {gt: alarmDataSource[name[i]].ceiling, color: "#ee0000"},
+            {lt: alarmDataSource[name[i]].ceiling, gt:alarmDataSource[name[i]].floor, color: "#66ccff"},
+            {lt: alarmDataSource[name[i]].floor, color: "#ee0000"},
+          ],
+        }]);
+      }
     }
+    if ((higher>0 && lower <0)) {
+      result.series[i] = {
+        yAxisIndex : 0,
+        // symbolSize: 8,
+        // symbol: sym,
+        // smooth: true,
+        type: "line",
+        // name: name[i],
+        // data: dataSourceTemp[name[i]],
+        // sampling: "average",
+        markLine : {
+          // lineStyle:{
+          //   normal:{
+          //
+          //   }
+          // },
+          // symbolRotate:180,
+          lineStyle:{normal:{width: 3,color: '#000000',type:'solid'}},
+
+          symbolSize:18,
+          data:[{yAxis: higher+lower}]
+        }
+      }
+    }
+    return result;
   };
-
-
 
   render() {
-    this.option = this.getInitialOption();
+    //this.option = this.getInitialOption();
     return (
       <div>
         <ReactEcharts
-          option={this.getOption()}
+          option={this.optionGenerate(this.props.name,this.props.dataSource,this.props.title,this.props.isPump)}
           height={150}
           width ={300}
         />
@@ -180,3 +285,5 @@ export default class Chart extends React.Component{
     )
   }
 }
+
+

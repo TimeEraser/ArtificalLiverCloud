@@ -31,4 +31,3 @@ export const getUserInfo = () => ({
     dispatch(receiveUserInfo(userInfo));
   }
 });
-

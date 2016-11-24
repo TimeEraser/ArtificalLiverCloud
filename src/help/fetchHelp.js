@@ -65,4 +65,3 @@ export function post(url, param, isJson) {
       notification.error(args);
     });
 }
-

@@ -4,14 +4,14 @@ import { Input } from 'antd';
 import {Table,Icon,Tag,Popover,Button} from 'antd';
 import { formatDate } from '../../help/dateUtils'
 import {
-  getSurgeries
+  getSurgeries,assignCurrentSurgery,getCurrentSurgery
 } from '../../redux/modules/surgery/SurgeryData';
 @connect((state)=>({
   surgeries:state.SurgeryData.surgery.surgeries,
   timeRange:state.SurgeryData.conditions.timeRange,
   doctor:state.SurgeryData.conditions.doctor,
   patient:state.SurgeryData.conditions.patient,
-}),{getSurgeries ,formatDate})
+}),{getSurgeries ,formatDate,assignCurrentSurgery,getCurrentSurgery})
 export default class SurgeryTable extends React.Component {
   static propTypes = {
     surgeries: PropTypes.array.isRequired,
@@ -19,6 +19,7 @@ export default class SurgeryTable extends React.Component {
     doctor:PropTypes.string.isRequired,
     patient:PropTypes.string.isRequired,
     getSurgeries: PropTypes.func.isRequired,
+    assignCurrentSurgery: PropTypes.func.isRequired,
   };
 
   constructor(props, context) {
@@ -56,7 +57,7 @@ export default class SurgeryTable extends React.Component {
       width: 150,
       key: 'surgeryNo',
       render(value,record){
-        return <a href="/" >{value}</a>;
+        return <a href={"/monitor/"+record.surgeryNo+"/detail"}   >{value}</a>;
       },
     },{
       title: '开始时间',
@@ -69,7 +70,7 @@ export default class SurgeryTable extends React.Component {
         if (record.state == SURGERY_INIT) {
           state = "";
         } else {
-            state= formatDate(value);
+          state= formatDate(value);
         }
         return state;
       },
@@ -102,28 +103,28 @@ export default class SurgeryTable extends React.Component {
         width: 100,
       },
       {
-      title: '执行状态',
-      dataIndex: 'state',
-      key: 'state',
+        title: '执行状态',
+        dataIndex: 'state',
+        key: 'state',
         width: 100,
-      filters: [
-        { text: '初始化', value: SURGERY_INIT },
-        { text: '执行中', value: SURGERY_EXECUTING },
-        { text: '已完成', value: SURGERY_COMPLETE },
-      ],
-      onFilter: (value, record) => record.state==value,
-      render(value){
-        var state;
-        if (value == SURGERY_INIT) {
-          state=<Tag color="yellow">初始化</Tag>
-        } else if (value == SURGERY_EXECUTING){
-          state=<Tag color="red">执行中</Tag>
-        } else if (value == SURGERY_COMPLETE){
-          state=<Tag color="green">已完成</Tag>
-        }
-        return state;
-      },
-    },{
+        filters: [
+          { text: '初始化', value: SURGERY_INIT },
+          { text: '执行中', value: SURGERY_EXECUTING },
+          { text: '已完成', value: SURGERY_COMPLETE },
+        ],
+        onFilter: (value, record) => record.state==value,
+        render(value){
+          var state;
+          if (value == SURGERY_INIT) {
+            state=<Tag color="yellow">初始化</Tag>
+          } else if (value == SURGERY_EXECUTING){
+            state=<Tag color="red">执行中</Tag>
+          } else if (value == SURGERY_COMPLETE){
+            state=<Tag color="green">已完成</Tag>
+          }
+          return state;
+        },
+      },{
         title: '病情描述',
         dataIndex: 'description',
         key: 'description',

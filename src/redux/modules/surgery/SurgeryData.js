@@ -12,6 +12,9 @@ const RECEIVE_PERSONS_DOCTORS = 'RECEIVE_PERSONS_DOCTORS';
 const CHANGE_CONDITIONS_PATIENT = 'CHANGE_CONDITIONS_PATIENT';
 const CHANGE_CONDITIONS_DOCTOR = 'CHANGE_CONDITIONS_DOCTOR';
 const CHANGE_CONDITIONS_TIME_RANGE = 'CHANGE_CONDITIONS_TIME_RANGE';
+const RECEIVE_CURRENT_SURGERY = 'RECEIVE_CURRENT_SURGERY';
+const ASSIGN_CURRENT_SURGERY = 'ASSIGN_CURRENT_SURGERY';
+const UPLOAD_SURGERY_INFO = 'UPLOAD_SURGERY_INFO';
 
 function transformSurgeries(obj) {
   _.merge(obj, {
@@ -43,18 +46,42 @@ export const changeConditionsPatient = (patient) => ({
   type: CHANGE_CONDITIONS_PATIENT,
   patient: patient
 });
+export const receiveCurrentSurgery = (surgery) => ({
+  type:RECEIVE_CURRENT_SURGERY,
+  surgery: surgery,
+});
+
+const uploadSugeryInfo= (surgeries) =>({
+  type: UPLOAD_SURGERY_INFO,
+  surgeries:surgeries,
+});
+
 //function part
+export const getCurrentSurgery = (param)=> {
+  const copy = _.clone(param);
+  var surgeryNo = copy.surgeryNo;
+  const url = (`/surgery/get/`+surgeryNo)
+  return {
+    promise: post(url, copy),
+    onSuccess: (surgery, dispatch)=> {
+      dispatch(receiveCurrentSurgery(surgery));
+    },
+    onFailure:()=> {
+      openNotificationWithIcon("failure",'系统异常','获取手术失败')
+    }
+  };
+}
 export const getSurgeries = (param)=> {
   const copy = _.clone(param);
   const url = (`/surgery/search`);
   return {
     promise: post(url, copy),
     onSuccess: (surgeries, dispatch)=> {
-        _.forEach(surgeries, (obj)=> {
-          transformSurgeries(surgeries);
-        });
-        openNotificationWithIcon("success",'查询手术成功','');
-        dispatch(receiveSurgeries(surgeries));
+      _.forEach(surgeries, (obj)=> {
+        transformSurgeries(surgeries);
+      });
+      openNotificationWithIcon("success",'查询手术成功','');
+      dispatch(receiveSurgeries(surgeries));
     },
     onFailure:()=> {
       openNotificationWithIcon("failure",'系统异常','获取手术列表失败')
@@ -67,13 +94,29 @@ export const getPersons = (param)=> {
   return {
     promise: post(url, copy),
     onSuccess: (result, dispatch)=> {
-        var doctors = result.doctors;
-        var patients= result.patients;
-        dispatch(receivePersonsDoctors(doctors));
-        dispatch(receivePersonsPatients(patients));
+      var doctors = result.doctors;
+      var patients= result.patients;
+      dispatch(receivePersonsDoctors(doctors));
+      dispatch(receivePersonsPatients(patients));
     }
   };
 };
+
+export const updateSurgeries = (param)=> {
+  const copy = _.clone(param);
+  const url = (`/updateSurgery`);
+  return {
+    promise: post(url, copy),
+    onSuccess: (surgeries, dispatch)=> {
+      _.forEach(surgeries, (obj)=> {
+        transformSurgeries(surgeries);
+      });
+      openNotificationWithIcon("success",'查询手术成功','');
+      dispatch(receiveSurgeries(surgeries));
+    },
+  };
+};
+
 //data part
 function surgery(state = {
   surgeries: [],
@@ -115,6 +158,16 @@ function persons(state = {
       return state;
   }
 }
+function currentSurgery(state={
+  surgery:{},
+},action){
+  switch (action.type){
+    case RECEIVE_CURRENT_SURGERY: {
+      return Object.assign({}, state, {surgery: action.surgery})
+    }
+    default: return state;
+  }
+}
 
 //assistant part
 const openNotificationWithIcon = function (type,title,msg) {
@@ -136,5 +189,5 @@ const openNotificationWithIcon = function (type,title,msg) {
 };
 
 export default combineReducers({
-  surgery,conditions,persons
+  surgery,conditions,persons,currentSurgery
 });

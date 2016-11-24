@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Form, Select, InputNumber, DatePicker, Button, Col,Row} from 'antd';
+import '../../../node_modules/antd/lib/date-picker/style/css';
 import {formatDate,getBeforeDate,getCurrentDate} from '../../help/dateUtils';
 import {connect} from 'react-redux';
 @connect((state)=>({
@@ -56,64 +57,66 @@ export default class SurgeryForm extends React.Component {
     for (var patientIndex=0; patientIndex < this.props.patients.length; patientIndex++){
       patientsChildren.push(<Option key={this.props.patients[patientIndex]}>{this.props.patients[patientIndex]}</Option>)
     }
-    DefaultTimeRange.push(getBeforeDate(3));
+    DefaultTimeRange.push(getBeforeDate(30));
     DefaultTimeRange.push(getCurrentDate());
     return (
-      <Form horizontal>
-        <Row >
-          <Col span="8">
-            <FormItem
-              label="时间范围"
-              labelCol={{ span: 4 }}
-              wrapperCol={{ span: 20 }}
-            >
-              <RangePicker showTime defaultValue={DefaultTimeRange} onChange={(date,value)=> {this.handleChangeConditionsTimeRange(formatDate(date[0].getTime())+'~'+formatDate(date[1].getTime()));}} format="yyyy/MM/dd HH:mm:ss"/>
-            </FormItem>
-          </Col>
-          <Col span="6">
-          <FormItem
-            label="医生"
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 18 }}>
-            <Select
-              showSearch
-              style={{ width: 200 }}
-              placeholder="Select a person"
-              optionFilterProp="children"
-              notFoundContent=""
-              onSelect={(value)=>this.handleChangeConditionsDoctor(value)}
-            >
-              {doctorsChildren}
-            </Select>
-          </FormItem>
-          </Col>
-          <Col span="6">
-            <FormItem
-              label="病人"
-              labelCol={{ span: 6 }}
-              wrapperCol={{ span: 18 }}>
-              <Select
-                showSearch
-                style={{ width: 200 }}
-                placeholder="Select a person"
-                optionFilterProp="children"
-                notFoundContent=""
-                onChange={(value)=>this.handleChangeConditionsPatient(value)}
+      <h1>
+        <Form horizontal>
+          <Row >
+            <Col span="8">
+              <FormItem
+                label="时间范围"
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 20 }}
               >
-                {patientsChildren}
-              </Select>
-            </FormItem>
-          </Col>
-          <Col span="4">
-            <FormItem
-              label="  "
-              labelCol={{ span: 6 }}
-              wrapperCol={{ span: 18 }}>
-              <Button type="primary" htmlType="submit" onClick={this.handleSurgerySearch.bind(this)}>查询</Button>
-            </FormItem>
-          </Col>
-        </Row>
-      </Form>
+                {/*<RangePicker showTime defaultValue={DefaultTimeRange} onChange={(date,value)=> {this.handleChangeConditionsTimeRange(formatDate(date[0].getTime())+'~'+formatDate(date[1].getTime()));}} format="YYYY-MM-DD HH:mm:ss"/>*/}
+              </FormItem>
+            </Col>
+            <Col span="6">
+              <FormItem
+                label="医生"
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 18 }}>
+                <Select
+                  showSearch
+                  style={{ width: 200 }}
+                  placeholder="Select a person"
+                  optionFilterProp="children"
+                  notFoundContent=""
+                  onSelect={(value)=>this.handleChangeConditionsDoctor(value)}
+                >
+                  {doctorsChildren}
+                </Select>
+              </FormItem>
+            </Col>
+            <Col span="6">
+              <FormItem
+                label="病人"
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 18 }}>
+                <Select
+                  showSearch
+                  style={{ width: 200 }}
+                  placeholder="Select a person"
+                  optionFilterProp="children"
+                  notFoundContent=""
+                  onChange={(value)=>this.handleChangeConditionsPatient(value)}
+                >
+                  {patientsChildren}
+                </Select>
+              </FormItem>
+            </Col>
+            <Col span="4">
+              <FormItem
+                label="  "
+                labelCol={{ span: 6 }}
+                wrapperCol={{ span: 18 }}>
+                <Button type="primary" htmlType="submit" onClick={this.handleSurgerySearch.bind(this)}>查询</Button>
+              </FormItem>
+            </Col>
+          </Row>
+        </Form>
+      </h1>
     );
   }
 }

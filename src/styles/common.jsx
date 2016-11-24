@@ -233,7 +233,7 @@ function renderInfoInput(info, item) {
     case 'InputSlider':
       return (<InputSlider min={input.min} max={input.max}
                            value={value}
-                           onChange={input.onChange}/>);
+                           onChange={input.handleChangeRange}/>);
     case 'DateFormat':
       return <span>{formatDate(value)}</span>;
     default :

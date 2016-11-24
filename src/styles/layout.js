@@ -1,6 +1,6 @@
 export const centerLabel = {
   textAlign: 'center',
-  fontSize: '13px',
+  fontSize: '18px',
   paddingTop: '4px'
 };
 export const formItemLayout = {

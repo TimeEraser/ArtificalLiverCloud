@@ -1,4 +1,4 @@
-import {get, post} from 'help/fetchHelp';
+import {get, post} from '../../help/fetchHelp';
 import _ from 'lodash';
 import {combineReducers} from 'redux';
 import {receiveObjToArr} from '../utils/dataUtil';

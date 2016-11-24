@@ -28,13 +28,11 @@ export default class Header extends React.Component {
     const {userImg, userName} = this.props.userInfo;
     return (
       <div>
-          <Row>
-            <Col span="6" style={colStyle}>人工肝状态监测中心</Col>
-            <Col span="2" offset="16" style={colStyle}><img src={userImg} height="30px"/>{userName}</Col>
-          </Row>
-        </div>
+        <Row>
+          <Col span="6" style={colStyle}>人工肝状态监测中心</Col>
+          <Col span="2" offset="16" style={colStyle}><img src={userImg} height="30px"/>{userName}</Col>
+        </Row>
+      </div>
     );
   }
 }
-
-

@@ -26,7 +26,8 @@ export function changeMenuItem(content) {
   };
 }
 
-export default function reducer(state = {
+export default function reducer(
+  state = {
   mask: false,
   subMenu: '概要信息',
   menuItem: 'home'
