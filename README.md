@@ -68,11 +68,6 @@ Usage
 -----
 开发脚本简介
 
->* 本地后端[hc.raptor.mogujie.org:8080](hc.raptor.mogujie.org:8080)，
-前端[hc.raptor.mogujie.org:3000](hc.raptor.mogujie.org:3000)
-* tc测试环境 前端p.tc.console.org
-* ic测试环境 前端p.id.console.org
-
 * 本地开发，redux新建窗口?  `npm run dev:nw`
 * 本地开发, redux内嵌窗口? `npm start`
 * 本地开发  redux不出现?`npm run dev:no-debug`
